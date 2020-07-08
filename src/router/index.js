@@ -1,14 +1,28 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Index from "../views/index/Index.vue";
+import Error from "../views/404.vue";
+import Login from "../views/Login.vue";
+import Regist from "../views/Regist.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    component: Index
+  },
+  {
+    path: "/index",
+    redirect: "/"
+  },
+  {
+    path: "/sign",
+    component: Login
+  },
+  {
+    path: "/regist",
+    component: Regist
   },
   {
     path: "/about",
@@ -18,11 +32,16 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "*",
+    component: Error
   }
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: "history"
 });
 
 export default router;
