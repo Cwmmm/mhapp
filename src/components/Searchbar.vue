@@ -1,13 +1,13 @@
 <template>
   <section>
     <div class="bar">
-    <input type="text" class="s_inp">
-    <button class="s_icon">
-      搜索
-    </button>
-    <div class="s_list">
-      <h3>123</h3>
-    </div>
+      <input type="text" class="s_inp" />
+      <button class="s_icon">
+        搜索
+      </button>
+      <div class="s_list">
+        <h3>123</h3>
+      </div>
     </div>
     <ul class="s_hot">
       <li>1</li>

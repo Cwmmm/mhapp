@@ -1,7 +1,5 @@
 <template>
-  <aside>
-    111
-  </aside>
+  <aside></aside>
 </template>
 
 <script>

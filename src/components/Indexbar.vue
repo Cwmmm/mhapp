@@ -1,12 +1,15 @@
 <template>
-  <section>
-
-  </section>
+  <section></section>
 </template>
 <script>
 export default {
-  
-}
+  data() {
+    return {
+      id: "",
+      url: ""
+    };
+  }
+};
 </script>
 <style lang="less" scoped>
 section {

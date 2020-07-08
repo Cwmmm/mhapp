@@ -7,7 +7,6 @@
 <style lang="less" scoped>
 footer {
   height: 300px;
-  background-color:indigo;
+  background-color: indigo;
 }
-
 </style>

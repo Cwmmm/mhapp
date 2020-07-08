@@ -4,7 +4,7 @@
     <div class="top">
       <div class="wrap">
         <div class="logo">
-          <img src="../assets/ac_logo.png" alt="" style="margin-left:50px">
+          <img src="../assets/ac_logo.png" alt="" style="margin-left:50px" />
         </div>
         <div class="search">
           <v-search></v-search>
@@ -48,7 +48,7 @@ header {
   background: cadetblue;
 }
 .bottom {
-  height: 60px;
+  height: 54px;
   background-color: coral;
 }
 .wrap {
@@ -83,7 +83,7 @@ header {
   text-align: center;
   vertical-align: middle;
   width: 85px;
-  height: 60px;
+  height: 54px;
   margin-left: 40px;
   // box-sizing: content-box;
 }
@@ -100,6 +100,6 @@ header {
   text-align: center;
   vertical-align: middle;
   border-radius: 3px;
-  color: #FCE5BB;
+  color: #fce5bb;
 }
 </style>

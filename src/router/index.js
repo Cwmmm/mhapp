@@ -4,6 +4,7 @@ import Index from "../views/index/Index.vue";
 import Error from "../views/404.vue";
 import Login from "../views/Login.vue";
 import Regist from "../views/Regist.vue";
+import Comic from "../views/Comic.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,10 @@ const routes = [
   {
     path: "/index",
     redirect: "/"
+  },
+  {
+    path: "/comic",
+    component: Comic
   },
   {
     path: "/sign",

@@ -21,8 +21,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Sider from "@/components/Sidebar";
 import Indexbar from "@/components/Indexbar";
-
-
+import { homepage } from "@/config/API";
 export default {
   name: "index",
   components: {
@@ -30,6 +29,14 @@ export default {
     "v-footer": Footer,
     "v-sider": Sider,
     "v-indexbar": Indexbar
+  },
+  created() {
+    homepage.hotSearch().then(({ data }) => {
+      console.log(data.data);
+    });
+    homepage.banner().then(({ data }) => {
+      console.log(data.data);
+    });
   }
 };
 </script>
