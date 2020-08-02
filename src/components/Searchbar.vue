@@ -10,14 +10,32 @@
       </div>
     </div>
     <ul class="s_hot">
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
+      <router-link
+        :to="'/comic/' + item.id"
+        tag="li"
+        v-for="item in hotInfo"
+        :key="item.id"
+      >
+        {{ item.title }}</router-link
+      >
     </ul>
   </section>
 </template>
-
+<script>
+import { comic } from "@/config/API";
+export default {
+  data() {
+    return {
+      hotInfo: []
+    };
+  },
+  mounted() {
+    comic.hotSearch().then(({ data }) => {
+      this.hotInfo = data;
+    });
+  }
+};
+</script>
 <style lang="less" scoped>
 section {
   width: 456px;
@@ -47,6 +65,7 @@ section {
 }
 .s_hot li {
   display: inline-block;
+  cursor: pointer;
 }
 .s_hot {
   margin-top: 10px;

@@ -5,7 +5,7 @@ import Error from "../views/404.vue";
 import Login from "../views/Login.vue";
 import Regist from "../views/Regist.vue";
 import Comic from "../views/Comic.vue";
-
+import Tag from "../views/Tag.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -18,8 +18,12 @@ const routes = [
     redirect: "/"
   },
   {
-    path: "/comic",
+    path: "/comic/:id",
     component: Comic
+  },
+  {
+    path: "/tag/:id",
+    component: Tag
   },
   {
     path: "/sign",

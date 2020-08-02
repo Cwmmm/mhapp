@@ -1,24 +1,14 @@
-# emmh
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 页面
+  * 首页 80%
+  * 分类 
+  * 排行
+  * 搜索展示页
+  * 漫画信息展示页面 on...
+  * 漫画展示页面
+    * 上一页
+    * 下一页
+    * 切换皮肤
+    * 回到首页
+    * 添加收藏
+  * 投稿页
+  * 登录/注册页

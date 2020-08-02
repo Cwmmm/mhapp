@@ -1,3 +1,3 @@
-import homepage from "./homepage";
+import comic from "./comic";
 
-export { homepage };
+export { comic };

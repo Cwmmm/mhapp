@@ -1,5 +1,4 @@
-const base = {
-  easy_mock: " http://34.92.235.126:7300/mock/5f059130eb213b002067366a/mh"
-};
+const easy_mock = " http://34.92.235.126:7300/mock/5f059130eb213b002067366a/mh";
+const local = "http://localhost:3000";
 
-export default base;
+export { easy_mock, local };
