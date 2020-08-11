@@ -2,53 +2,45 @@
 <template>
   <div id="index">
     <v-header></v-header>
-    <v-sider v-if="null"></v-sider>
+    <v-sider></v-sider>
 
     <div class="container">
       <!-- 轮播图 -->
       <div class="banner">
         <swiper :bannerInfo="this.bannerInfo" v-if="this.bannerInfo"></swiper>
       </div>
-      <ul class="labelNav">
-        <router-link
-          :to="'tag/' + item.tag_id"
-          v-for="item in this.tags"
-          :key="item.tag_id"
-          tag="li"
-          class="navLi"
-          >{{ item.title }}</router-link
-        >
-        <router-link to="tag/0" tag="li" class="navLi">全部</router-link>
-      </ul>
+      <div class="labelWrap" v-if="this.tags">
+        <ul class="labelNav">
+          <router-link
+            :to="'tag/' + item.tag_id"
+            v-for="item in this.tags"
+            :key="item.tag_id"
+            tag="li"
+            class="navLi"
+            >{{ item.title }}</router-link
+          >
+          <router-link to="tag/0" tag="li" class="navLi lastLi"
+            ><svg
+              t="1596683586993"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="2208"
+            >
+              <path
+                d="M142.08 791.17824H51.98336c-16.56832 0-30.0288 13.47072-30.0288 30.09536 0 16.62976 13.46048 30.11072 30.0288 30.11072H142.08c16.56832 0 30.0288-13.48608 30.0288-30.11072 0.00512-16.62464-13.46048-30.09536-30.0288-30.09536z m829.93664 0H352.29696a30.07488 30.07488 0 0 0-30.03904 30.09536c0 16.62976 13.4656 30.11072 30.03904 30.11072h619.71968c16.5632 0 30.0288-13.48608 30.0288-30.11072 0.00512-16.62464-13.4656-30.09536-30.0288-30.09536zM142.08 481.8944H51.98336c-16.56832 0-30.0288 13.48096-30.0288 30.1056s13.46048 30.10048 30.0288 30.10048H142.08c16.56832 0 30.0288-13.47584 30.0288-30.10048 0.00512-16.62464-13.46048-30.1056-30.0288-30.1056z m829.93664 0H352.29696c-16.57344 0-30.03904 13.48096-30.03904 30.1056s13.4656 30.10048 30.03904 30.10048h619.71968c16.5632 0 30.0288-13.47584 30.0288-30.10048 0.00512-16.62464-13.4656-30.1056-30.0288-30.1056zM142.08 172.6208H51.98336c-16.56832 0-30.0288 13.48096-30.0288 30.1056 0 16.61952 13.46048 30.10048 30.0288 30.10048H142.08c16.56832 0 30.0288-13.47584 30.0288-30.10048 0.00512-16.62464-13.46048-30.1056-30.0288-30.1056z m210.21696 60.20608h619.71456c16.56832 0 30.03392-13.48096 30.03392-30.10048s-13.4656-30.1056-30.03392-30.1056H352.29696c-16.56832 0-30.03392 13.48608-30.03392 30.1056s13.46048 30.10048 30.03392 30.10048z"
+                p-id="2209"
+              ></path></svg
+          ></router-link>
+        </ul>
+      </div>
       <!-- 推荐&&排行榜 -->
       <div class="homeMayLike">
-        <div class="recommend">
-          <h2>这漫画令我上头!</h2>
-          <div class="cardWrap">
-            <div class="card" v-for="item in suggests" :key="item.id">
-              <router-link
-                :to="'comic/' + item.id"
-                tag="li"
-                :style="{
-                  'background-image': 'url(' + item.vertical_image_url + ')'
-                }"
-                class="cardLi"
-              >
-                <span v-if="item.category.length >= 1">
-                  {{ item.category[0] }}
-                </span>
-                <span v-if="item.category.length >= 1">
-                  {{ item.category[1] }}
-                </span>
-                <span class="cardTitle">
-                  {{ item.title }}
-                </span>
-              </router-link>
-              <div class="bot">
-                <span> {{ item.user.nickname }}</span>
-                <span> {{ item.likes_count }} </span>
-              </div>
-            </div>
+        <div class="commend">
+          <h2>我推荐的你还敢不看?!</h2>
+          <div class="cardWrapper">
+            <card v-for="item in suggests" :key="item.id" :data="item"></card>
           </div>
         </div>
         <div class="popularity">
@@ -80,7 +72,7 @@
             <div class="cardWrapper">
               <router-link
                 :to="'/comic/' + comic.id"
-                v-for="comic in item.comicArr"
+                v-for="comic in item.comics"
                 :key="comic.id"
                 tag="ul"
                 class="comicCard"
@@ -106,7 +98,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Sider from "@/components/Sidebar";
 import swiper from "@/components/swiper/Swiper";
-import { comic } from "@/config/API";
+import card from "@/components/Card";
+import { banner, suggest } from "@/config/API";
 export default {
   data() {
     return {
@@ -121,18 +114,20 @@ export default {
     "v-header": Header,
     "v-footer": Footer,
     "v-sider": Sider,
-    swiper
+    swiper,
+    card
   },
   mounted() {
-    comic.banner().then(({ data }) => {
-      this.bannerInfo = data.banners;
-      this.tags = data.tags.slice(0, 15);
+    this.$store.state.tags.then(({ data }) => {
+      this.tags = data.slice(0, 15);
     });
-    comic.suggest().then(({ data }) => {
+    banner().then(({ data }) => {
+      this.bannerInfo = data.banners;
+    });
+    suggest().then(({ data }) => {
       this.suggests = data.suggests;
       this.rank = data.rank;
       this.classify = data.classify.slice(0, 5);
-      console.log(this.classify[0].comicArr.length);
     });
   }
 };
@@ -142,61 +137,63 @@ export default {
 .container {
   width: 100%;
   overflow: hidden;
-  background-color: #eee;
+  background-color: #eeeeee;
   position: relative;
+  color: #3f3f3f;
 }
-// 轮播图
-.banner {
-  height: 450px;
-}
+
 // label导航
-.labelNav {
-  :hover {
-    color: red;
-  }
-  cursor: pointer;
-  width: 1200px;
-  margin: 10px auto;
-  padding: 0;
-  background-color: cadetblue;
-  .navLi {
-    display: inline-block;
-    margin-right: 30px;
+.labelWrap {
+  height: 46px;
+  // background-color: #95a5a6;
+  .labelNav {
+    border-bottom: 1px solid #bdc3c7;
+    cursor: pointer;
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    font-size: 15px;
+    .lastLi {
+      height: 26px;
+      .icon {
+        width: 26px;
+        fill: #d35400;
+        &:hover {
+          fill: #138d75;
+        }
+      }
+    }
+    .navLi {
+      &:hover {
+        color: #138d75;
+      }
+    }
   }
 }
+
 //homelike
 .homeMayLike {
   height: 600px;
   width: 1200px;
   margin: 0 auto;
-  .recommend {
+  .commend {
     width: 750px;
-    height: 100%;
+    height: 508px;
     float: left;
-    .cardWrap {
-      width: 100%;
-      height: 450px;
+    h2 {
+      font-weight: 500;
+      font-size: 24px;
+    }
+    .cardWrapper {
+      height: 100%;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      .card {
-        width: 144px;
-        height: 250px;
-        .cardLi {
-          height: 192px;
-          border-radius: 5px;
-          background-size: cover;
-          background-position: center;
-        }
-        .bot {
-          span:nth-child(1) {
-            color: red;
-          }
-          span:nth-child(2) {
-            color: blue;
-          }
-        }
-      }
+      align-content: space-between;
     }
   }
   .popularity {
@@ -204,6 +201,11 @@ export default {
     height: 100%;
     float: left;
     margin-left: 50px;
+    h2 {
+      background-color: #e6e6e6;
+      font-size: 24px;
+      font-weight: 500;
+    }
     .boxWrapper {
       :nth-child(-n + 3) {
         i {
@@ -211,6 +213,7 @@ export default {
         }
       }
       .textBox {
+        border-left: 1px solid #bdc3c7;
         padding-bottom: 16px;
         i {
           padding-right: 15px;

@@ -10,6 +10,12 @@ const comic = {
   },
   suggest() {
     return axios.get(`${base}/comic/suggest`);
+  },
+  search(title) {
+    return axios.get(`${base}/comic/search`, { params: { title } });
+  },
+  getComic(id) {
+    return axios.get(`${base}/comic/${id}`);
   }
 };
 

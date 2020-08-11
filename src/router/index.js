@@ -2,10 +2,13 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Index from "../views/index/Index.vue";
 import Error from "../views/404.vue";
-import Login from "../views/Login.vue";
-import Regist from "../views/Regist.vue";
 import Comic from "../views/Comic.vue";
 import Tag from "../views/Tag.vue";
+import Reader from "../views/Reader.vue";
+import Sign from "../views/sign/index.vue";
+import Login from "../views/sign/login.vue";
+import SignUp from "../views/sign/signup.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,12 +29,26 @@ const routes = [
     component: Tag
   },
   {
-    path: "/sign",
-    component: Login
+    path: "/reader/:id",
+    component: Reader
   },
   {
-    path: "/regist",
-    component: Regist
+    path: "/sign",
+    component: Sign,
+    children: [
+      {
+        path: "",
+        redirect: "login"
+      },
+      {
+        path: "login",
+        component: Login
+      },
+      {
+        path: "signup",
+        component: SignUp
+      }
+    ]
   },
   {
     path: "/about",

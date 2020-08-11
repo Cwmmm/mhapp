@@ -39,9 +39,6 @@
             p-id="2803"
           ></path></svg
       ></i>
-      <div class="dots">
-        <span v-for="(item, index) in bannerInfo" :key="index"></span>
-      </div>
     </div>
     <ul class="item_wrap">
       <li
@@ -49,9 +46,8 @@
         v-for="(item, index) in bannerInfo"
         :key="item.index"
         :class="setClass(index)"
-      >
-        <img :src="item.cover_image_url" alt="cover_img" />
-      </li>
+        :style="{ background: 'url(' + item.cover_image_url + ')' }"
+      ></li>
     </ul>
   </section>
 </template>
@@ -83,7 +79,7 @@ export default {
     }
   },
   mounted() {
-    this.play();
+    // this.play();
   },
   methods: {
     //播放
@@ -120,10 +116,12 @@ export default {
     },
     //后退
     back() {
-      this.currentIndex =
-        this.currentIndex === 0
-          ? this.bannerInfo.length - 1
-          : this.currentIndex - 1;
+      setTimeout(() => {
+        this.currentIndex =
+          this.currentIndex === 0
+            ? this.bannerInfo.length - 1
+            : this.currentIndex - 1;
+      }, 500);
     },
     //前进
     forward() {
@@ -134,14 +132,37 @@ export default {
 </script>
 <style lang="less" scoped>
 .swiper {
-  padding: 10px 0;
-  width: 100%;
-  min-width: 1500px;
-  height: 100%;
-  background-color: lightslategrey;
+  width: 100vw;
+  height: 23vw;
+  min-width: 1200px;
+  min-height: 276px;
+  background-color: #95a5a6;
   position: relative;
 }
-
+.swiper_item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 44.5%;
+  height: 90%;
+  z-index: 2;
+  transition: all 500ms ease-in-out;
+  background-size: cover !important;
+  background-position: center !important;
+}
+.prev {
+  transform: translate(-153%, -50%);
+  z-index: 98;
+}
+.next {
+  transform: translate(53%, -50%);
+  z-index: 97;
+}
+.active {
+  z-index: 99;
+  height: 92%;
+}
 // nav
 .left_icon,
 .right_icon,
@@ -164,61 +185,15 @@ export default {
 .right_icon:hover {
   fill: orange;
 }
-.dots {
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30%;
-  height: 10px;
-  display: flex;
-  justify-content: space-around;
-  span {
-    width: 100px;
-    background-color: red;
-  }
-}
 
 // swiper item样式
 .item_wrap {
   margin: 0;
-  box-sizing: border-box;
-  padding: 10px 10px 20px 10px;
+  padding: 0 10px 10px 10px;
   width: 100%;
   height: 100%;
   position: relative;
-  left: 0;
-  top: 0;
 }
-.swiper_item {
-  overflow: hidden;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 45%;
-  height: 95%;
-  background-color: palegoldenrod;
-  margin: 0 auto;
-  z-index: 2;
-  transition: all 500ms ease-in-out;
-  img {
-    width: 100%;
-  }
-}
-.active {
-  width: 50%;
-  height: 100%;
-  z-index: 99;
-}
-.prev {
-  transform: translate(-100%, -50%);
-  z-index: 98;
-  background-color: palevioletred;
-}
-.next {
-  transform: translate(0, -50%);
-  z-index: 97;
-  background-color: plum;
-}
+
+
 </style>
