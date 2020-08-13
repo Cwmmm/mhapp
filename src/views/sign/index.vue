@@ -1,22 +1,18 @@
 <template>
   <div class="sign">
     <div class="nav">
-      <router-link to="login" tag="div" class="a_login"> Log In </router-link>
-      <router-link to="signup" tag="div" class="a_signup">
-        Sign Up
+      <router-link to="login" tag="div"> 登录 </router-link>
+      <router-link to="signup" tag="div">
+        注册
       </router-link>
     </div>
     <router-view></router-view>
   </div>
 </template>
-<script>
-export default {
-  created() {
-    console.log(this.$route);
-  }
-};
-</script>
 <style lang="less" scoped>
+.router-link-active {
+  background-color: #73c6b5 !important;
+}
 .sign {
   width: 600px;
   margin: 50px auto;
@@ -32,13 +28,10 @@ export default {
       height: 53px;
       font-size: 20px;
       color: #3f3f3f;
-      padding: 15px;
+      padding: 12px;
       text-align: center;
       cursor: pointer;
-      &:nth-of-type(1) {
-        background-color: #73c6b5;
-      }
-      &:nth-of-type(2) {
+      div {
         background-color: #bdc3c7;
       }
       &:hover {

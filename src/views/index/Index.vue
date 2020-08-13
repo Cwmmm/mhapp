@@ -99,7 +99,8 @@ import Footer from "@/components/Footer";
 import Sider from "@/components/Sidebar";
 import swiper from "@/components/swiper/Swiper";
 import card from "@/components/Card";
-import { banner, suggest } from "@/config/API";
+import { banner, suggest, userInfo } from "@/config/API";
+
 export default {
   data() {
     return {
@@ -107,7 +108,8 @@ export default {
       tags: null,
       suggests: null,
       rank: null,
-      classify: null
+      classify: null,
+      userInfo: null
     };
   },
   components: {
@@ -118,6 +120,7 @@ export default {
     card
   },
   mounted() {
+    userInfo();
     this.$store.state.tags.then(({ data }) => {
       this.tags = data.slice(0, 15);
     });
@@ -137,7 +140,7 @@ export default {
 .container {
   width: 100%;
   overflow: hidden;
-  background-color: #eeeeee;
+  background-color: #e6e6e6;
   position: relative;
   color: #3f3f3f;
 }

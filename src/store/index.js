@@ -7,11 +7,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    tags: []
+    tags: [],
+    islogin: false,
+    netword: true
   },
   mutations: {
     inputTags(state) {
       state.tags = tag();
+    },
+    changeLogin(state, bool) {
+      state.islogin = bool;
     }
   },
   actions: {

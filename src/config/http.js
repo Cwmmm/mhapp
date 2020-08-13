@@ -5,19 +5,9 @@
 import axios from "axios";
 import router from "../router";
 import store from "../store";
-// import { Toast } from "../components/toast.vue";
-
-/**
- * 提示函数
- * 禁止点击蒙层、显示一秒后关闭
- */
-// const tip = msg => {
-//   Toast({
-//     message: msg,
-//     forbidClick: true,
-//     duration: 1000
-//   });
-// };
+import { message } from "ant-design-vue";
+import qs from "qs";
+import { getLocalStorage } from "./utils";
 
 /**
  * 跳转登录页
@@ -32,38 +22,56 @@ const toLogin = () => {
   });
 };
 
-/**
- * 请求失败后的错误统一处理
- * @param {Number} status 请求失败的状态码
- */
-
-const errorHandle = (status, other) => {
+const errorHandle = (status, msg) => {
   // 状态码判断
   switch (status) {
-    case 401:
-      toLogin();
+    case 400:
+      message.error(msg);
       break;
-    case 403:
-      // tip("登录已过期,即将跳转到登录");
-      localStorage.removeItem("token");
-      store.commit("loginSuccess", null);
+    case 401:
+      message.info("请登录后再试");
       setTimeout(() => {
         toLogin();
       }, 1000);
       break;
+    case 403:
+      message.error("拒绝访问");
+      break;
     case 404:
-      // tip("请求的资源不存在");
+      message.error(msg);
+      break;
+    case 500:
+      message.error("服务端出错");
       break;
     default:
-      console.log(other);
+      message.error(message);
   }
 };
 
 // 创建axios实例
-var instance = axios.create({ timeout: 1000 * 12 });
+var instance = axios.create({ timeout: 1000 * 10 });
+//允许携带cookie
+instance.defaults.withCredentials = true;
+
 // 设置post请求头
 instance.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
+
+//请求拦截
+instance.interceptors.request.use(
+  //序列化
+  req => {
+    if (getLocalStorage("token")) {
+      console.log(getLocalStorage("token"));
+      req.headers["Authorization"] = "Bearer " + getLocalStorage("token");
+    }
+    req.data = qs.stringify(req.data);
+    return req;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
 
 // 响应拦截器
 instance.interceptors.response.use(
@@ -72,10 +80,9 @@ instance.interceptors.response.use(
   // 请求失败
   error => {
     const { response } = error;
-    console.log(response);
     if (response) {
       // 请求已发出，但是不在2xx的范围
-      errorHandle(response.status, response.data.message);
+      errorHandle(response.status, response.data.msg);
       return Promise.reject(response);
     } else {
       // 处理断网的情况

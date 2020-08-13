@@ -29,8 +29,11 @@ export function comic(id) {
 }
 //user
 export function rigist(mail, name, password) {
-  return axios.post(`${base}/sign/rigist`, { data: { mail, name, password } });
+  return axios.post(`${base}/user/rigist`, { data: { mail, name, password } });
 }
 export function login(mail, password) {
-  return axios.post(`${base}/sign/login`, { data: { mail, password } });
+  return axios.post(`${base}/user/login`, { data: { mail, password } });
+}
+export function userInfo() {
+  return axios.post(`${base}/user/info`);
 }
