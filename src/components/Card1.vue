@@ -15,8 +15,7 @@
       {{ data.title }}</router-link
     >
     <div class="bot">
-      <span class="Ahthor"> {{ data.user.nickname }}</span>
-      <span class="likeCount"> {{ this.likeCount }} </span>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -71,6 +70,9 @@ export default {
   .itemTitle {
     &:hover {
       color: #dc7633;
+    }
+    span {
+      float: right;
     }
     cursor: pointer;
     width: 100%;

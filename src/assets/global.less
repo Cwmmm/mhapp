@@ -1,0 +1,86 @@
+@main-color: #111111;
+@title-color: #2d2d2d;
+@title-border: 2px solid #222222;
+@hover-color: #48c9b0;
+@focus-color: #44b29d;
+@author-color: #dd5555;
+@light-color: #777777;
+@btn-color: #444444;
+@navbg-color: #e3e3e3;
+
+//着重标题包装
+.emphasize-title-wrap(@width){
+  width: @width;
+  border-bottom: 2px solid #222222;
+  height: 30px;
+  margin-bottom: 24px;
+  span {
+    .emphasize-title()
+  }
+}
+//着重标题
+.emphasize-title() {
+  color: #fff;
+  display: inline-block;
+  line-height: 17px;
+  height: 28px;
+  padding: 7px 12px 4px 12px;
+  background-color: black;
+}
+
+//btn封装
+.btn(@width,@height){
+  border: 0;
+  outline: none;
+  display: inline-block;
+  font-size: 16px;
+  // padding: @height - font-size;
+  width: @width;
+  height: @height;
+  text-align: center;
+  background-color: @btn-color;
+  color: #fff;
+  &:hover {
+    background-color: @hover-color;
+  }
+  &:active {
+    background-color: @focus-color;
+  }
+}
+
+// label导航
+.labelNav(){
+  border-bottom: @title-border;
+  width: 1068px;
+  height: 48px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  span {
+    .emphasize-title();
+  }
+  li {
+    color: @light-color;
+    display: inline-block;
+    line-height: 17px;
+    height: 28px;
+    padding: 7px 12px 4px 12px;
+  }
+  .lastLi {
+    .icon {
+      width: 19px;
+      fill: @light-color;
+      &:hover {
+        fill: @hover-color;
+      }
+    }
+  }
+  .navLi {
+    &:hover {
+      color: #138d75;
+    }
+  }
+}
+
+

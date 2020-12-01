@@ -63,7 +63,7 @@ section {
   margin: 0 auto;
 }
 .bar {
-  border: 3px solid rgb(216, 214, 214);
+  border: 1px solid @light-color;
   border-radius: 2px;
   position: relative;
   input {
@@ -77,7 +77,7 @@ section {
 }
 .s_icon {
   border: none;
-  background-color: #666;
+  background-color: #222222;
   height: 40px;
   width: 70px;
   float: right;
@@ -103,7 +103,7 @@ section {
   }
   .icon-search {
     width: 50%;
-    fill: #b1b4b9;
+    fill: #fff;
   }
 }
 .s_hot li {
@@ -111,14 +111,14 @@ section {
   cursor: pointer;
   margin-right: 10px;
   &:hover {
-    color: #fa966e;
+    color: @hover-color;
     text-decoration: underline;
   }
 }
 .s_hot {
   margin-top: 10px;
   padding-left: 0;
-  color: #717171;
+  color: @light-color;
   font-size: 13px;
 }
 </style>

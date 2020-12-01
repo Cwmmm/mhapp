@@ -26,8 +26,7 @@
 </template>
 <script>
 import { message } from "ant-design-vue";
-import { login } from "@/config/API";
-import { setLocalStorage } from "@/config/utils";
+import { login, userInfo } from "@/config/API";
 export default {
   data() {
     return {
@@ -43,10 +42,15 @@ export default {
     checkData() {
       if (!(this.mailShow && this.psdShow)) {
         login(this.mail, this.password).then(res => {
-          message.success(res.data.msg);
-          setLocalStorage("token", res.data.data);
-          this.$store.commit("changeLogin", true);
-          this.$router.replace("/");
+          message.success(res.msg);
+          this._utils.setLocalStorage("token", res.data);
+          userInfo()
+            .then(res => {
+              this._utils.setLocalStorage("userInfo", JSON.stringify(res.data));
+            })
+            .then(() => {
+              this.$router.replace("/");
+            });
         });
       } else {
         message.warn("格式错误,请重新输入");
@@ -95,7 +99,6 @@ export default {
 }
 .login {
   width: 100%;
-  color: #3f3f3f;
   h2 {
     font-size: 24px;
     font-weight: 500;
@@ -146,15 +149,16 @@ export default {
     border: none;
     padding-left: 10px;
     &:focus {
-      border: 1px solid #44b29d;
+      border: @title-border;
     }
   }
   button {
     width: 100%;
     height: 50px;
-    background-color: #73c6b5;
+    color: #fff;
+    background-color: @btn-color;
     font-size: 20px;
-    color: #3f3f3f;
+    color: #fff;
     border: none;
     outline: none;
     &:active {

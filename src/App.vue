@@ -10,9 +10,6 @@ export default {
     return {
       render: false
     };
-  },
-  created() {
-    this.$store.commit("inputTags");
   }
 };
 </script>
@@ -21,8 +18,9 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-size: 15px;
-  color: #3f3f3f;
+  font-size: 14px;
+  color: #2d2d2d;
+  cursor: pointer;
 }
 
 a {

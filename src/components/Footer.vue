@@ -6,7 +6,11 @@
 
 <style lang="less" scoped>
 footer {
-  height: 300px;
-  background-color: indigo;
+  // position: fixed;
+  // bottom: 0;
+  width: 100%;
+
+  height: 41px;
+  background-color: black;
 }
 </style>

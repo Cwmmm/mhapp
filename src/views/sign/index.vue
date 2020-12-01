@@ -1,8 +1,8 @@
 <template>
   <div class="sign">
     <div class="nav">
-      <router-link to="login" tag="div"> 登录 </router-link>
-      <router-link to="signup" tag="div">
+      <router-link to="login" tag="div" class="login-btn"> 登录 </router-link>
+      <router-link to="signup" tag="div" class="rigist-btn">
         注册
       </router-link>
     </div>
@@ -11,31 +11,28 @@
 </template>
 <style lang="less" scoped>
 .router-link-active {
-  background-color: #73c6b5 !important;
+  background-color: @btn-color !important;
 }
 .sign {
   width: 600px;
   margin: 50px auto;
-  background-color: #e6e6e6;
   padding: 45px;
+  background-color: @navbg-color;
   .nav {
     padding-bottom: 40px;
     width: 100%;
-
     div {
       display: inline-block;
       width: 50%;
       height: 53px;
       font-size: 20px;
-      color: #3f3f3f;
+      color: #fff;
       padding: 12px;
       text-align: center;
       cursor: pointer;
-      div {
-        background-color: #bdc3c7;
-      }
+      background-color: #e6e6e6;
       &:hover {
-        background-color: #44b29d;
+        background-color: @hover-color;
       }
     }
   }

@@ -4,7 +4,6 @@
  */
 import axios from "axios";
 import router from "../router";
-import store from "../store";
 import { message } from "ant-design-vue";
 import qs from "qs";
 import { getLocalStorage } from "./utils";
@@ -49,7 +48,7 @@ const errorHandle = (status, msg) => {
 };
 
 // 创建axios实例
-var instance = axios.create({ timeout: 1000 * 10 });
+var instance = axios.create({ timeout: 1000 * 20 });
 //允许携带cookie
 instance.defaults.withCredentials = true;
 
@@ -62,7 +61,6 @@ instance.interceptors.request.use(
   //序列化
   req => {
     if (getLocalStorage("token")) {
-      console.log(getLocalStorage("token"));
       req.headers["Authorization"] = "Bearer " + getLocalStorage("token");
     }
     req.data = qs.stringify(req.data);
@@ -76,7 +74,8 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   // 请求成功
-  res => (res.status === 200 ? Promise.resolve(res) : Promise.reject(res)),
+  res =>
+    res.status === 200 ? Promise.resolve(res.data) : Promise.reject(res.data),
   // 请求失败
   error => {
     const { response } = error;
@@ -90,7 +89,7 @@ instance.interceptors.response.use(
       // network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏
       // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
       if (!window.navigator.onLine) {
-        store.commit("updateNetwork", false);
+        return;
       } else {
         return Promise.reject(error);
       }

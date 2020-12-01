@@ -32,10 +32,37 @@
         <router-link to="/" tag="li">日漫</router-link>
         <router-link to="/" tag="li">韩漫</router-link>
         <router-link to="/rank" tag="li">排行榜</router-link>
-        <router-link to="/personalCenter" tag="li">个人中心</router-link>
+        <router-link to="/homepage" tag="li">个人中心</router-link>
+        <div class="profile right" v-if="userInfo">
+          <span
+            class="his"
+            @mouseover="hisListActive = true"
+            @mouseout="hisListActive = false"
+            >历史记录
+            <ul v-show="hisListActive"></ul>
+          </span>
+          <span
+            class="collect"
+            @mouseover="collectListActive = true"
+            @mouseout="collectListActive = false"
+            >我的收藏
+            <ul v-show="collectListActive"></ul>
+          </span>
+          <span><img :src="userInfo.cover_img" alt=""/></span>
+          <span>{{ userInfo.name }}</span>
+          <span @click="quit">退出</span>
+        </div>
         <li class="right" v-if="false">头像</li>
-        <router-link to="/sign/login" tag="li" class="right">登录</router-link>
-        <router-link to="/sign/rigist" tag="li">注册</router-link>
+        <router-link
+          to="/sign/login"
+          tag="li"
+          class="right"
+          v-if="!this.isLogin"
+          >登录</router-link
+        >
+        <router-link to="/sign/rigist" tag="li" v-if="!this.isLogin"
+          >注册</router-link
+        >
       </ul>
     </div>
   </header>
@@ -45,44 +72,93 @@ import Searchbar from "./Searchbar";
 export default {
   components: {
     "v-search": Searchbar
+  },
+  data() {
+    return {
+      isLogin: false,
+      userInfo: null,
+      hisListActive: false,
+      collectListActive: false
+    };
+  },
+  methods: {
+    quit: function() {
+      this._utils.removeAll();
+      this.$router.push("/sign/login");
+    }
+  },
+  mounted() {
+    //判断登录状态
+    if (this._utils.getLocalStorage("token")) {
+      this.isLogin = true;
+    }
+    this.userInfo = JSON.parse(this._utils.getLocalStorage("userInfo"));
+    console.log(this.userInfo);
   }
 };
 </script>
 
 <style lang="less" scoped>
+.profile {
+  .his,
+  .collect {
+    position: relative;
+    width: 200px;
+    height: 50px;
+    ul {
+      z-index: 999;
+      position: absolute;
+      left: -25px;
+      bottom: -100px;
+      box-shadow: 0 3px 2px #e3e3e3;
+      background-color: #fff;
+    }
+  }
+  span {
+    color: #2d2d2d;
+    font-weight: 700;
+    margin-left: 26px;
+    &:hover {
+      color: #138d75;
+    }
+    img {
+      height: 32px;
+    }
+  }
+}
 header {
   width: 100vw;
   background-color: #eeeeee;
 }
-
 .top {
   height: 130px;
-  background-color: #e6e6e6;
+  background-color: #fff;
 }
 .bottom {
-  height: 46px;
-  background-color: #bdc3c7;
+  height: 48px;
+  background-color: #f1f3f2;
+  box-shadow: 0 5px 4px #e3e3e3;
   .navbar {
     padding: 0;
     height: 100%;
-    max-width: 1200px;
+    width: 1068px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     .right {
       margin-left: auto;
-      // align-self: start;
-      // justify-self: end;
     }
     .indexIcon {
-      width: 25px;
-      fill: #3f3f3f;
+      width: 19px;
+      transform: translateY(3px);
+      fill: #2d2d2d;
       &:hover {
         fill: #138d75;
       }
     }
     li {
-      cursor: pointer;
+      color: #2d2d2d;
+      font-weight: 700;
       margin-right: 26px;
       &:hover {
         color: #138d75;
@@ -92,7 +168,7 @@ header {
 }
 .wrap {
   height: 100%;
-  width: 1200px;
+  width: 1068px;
   margin: 0 auto;
   display: flex;
   align-items: center;

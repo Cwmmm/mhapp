@@ -56,8 +56,8 @@ export default {
     async checkData() {
       if (!(this.nameShow && this.mailShow && this.psdShow)) {
         rigist(this.mail, this.name, this.password)
-          .then(msg => {
-            message.success(msg);
+          .then(() => {
+            message.success("注册成功");
             const that = this;
             setTimeout(function() {
               that.$router.replace("/sign/login");
@@ -180,15 +180,15 @@ export default {
     border: none;
     padding-left: 10px;
     &:focus {
-      border: 1px solid #44b29d;
+      border: @title-border;
     }
   }
   button {
     width: 100%;
     height: 50px;
-    background-color: #73c6b5;
+    background-color: @btn-color;
     font-size: 20px;
-    color: #3f3f3f;
+    color: #fff;
     border: none;
     outline: none;
     &:active {
