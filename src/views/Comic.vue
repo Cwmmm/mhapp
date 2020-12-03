@@ -1,6 +1,6 @@
 <template>
   <div class="comic">
-    <v-header></v-header>
+    <v-header :all="false"></v-header>
     <ul class="labelNav">
       <span class="title"> 全部分类 </span>
       <router-link
@@ -60,7 +60,7 @@
         </div>
         <div class="comments">
           <div class="title">
-            <span>留言</span>
+            <span>评论</span>
           </div>
           <div class="inputareaWrap">
             <textarea></textarea>
@@ -81,6 +81,9 @@
               <p class="content">{{ item.content }}</p>
               <!-- <button>回复</button> -->
             </li>
+          </ul>
+          <ul class="commentator none" v-show="this.comments">
+            暂无评论
           </ul>
         </div>
       </div>
@@ -346,6 +349,10 @@ article {
       button {
         .btn(@width:100%, @height:39px);
       }
+    }
+    .none {
+      text-align: center;
+      font-size: 18px;
     }
     .commentator {
       .commentItem {

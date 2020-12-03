@@ -6,8 +6,19 @@
       <div class="topwrap">
         <!-- 轮播图 -->
         <div class="banner">
-          <swiper v-if="bannerInfo" @click="to('123')">
-            <swiperItem v-for="item in bannerInfo" :key="item.id">
+          <swiper
+            v-if="bannerInfo"
+            width="700"
+            height="350"
+            autoplay="true"
+            interval="3000"
+            direction="next"
+          >
+            <swiperItem
+              v-for="item in bannerInfo"
+              :key="item.id"
+              :event="to(item.id)"
+            >
               <div class="img-wrapper">
                 <img :src="item.cover_image_url" alt="" />
               </div>
@@ -137,7 +148,7 @@
             </div>
             <div class="inputareaWrap">
               <textarea v-model="messageContent"></textarea>
-              <button @click="subMessage()">发表评论</button>
+              <button @click="subMessage()">发表留言</button>
             </div>
             <ul class="commentator" v-if="comments">
               <li
@@ -191,6 +202,11 @@ export default {
     card
   },
   methods: {
+    to: function(id) {
+      return function() {
+        this.$router.push("/comic/" + id);
+      };
+    },
     subMessage: async function() {
       const userInfo = JSON.parse(this._utils.getLocalStorage("userInfo"));
       if (userInfo) {

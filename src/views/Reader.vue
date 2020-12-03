@@ -1,6 +1,6 @@
 <template>
   <div class="reader">
-    <v-header></v-header>
+    <v-header :all="false"></v-header>
     <div class="container">
       <div class="crumb" v-if="comicInfo">
         <router-link tag="span" to="/">首页</router-link>
@@ -96,7 +96,7 @@ export default {
     const list = await imgList(this.$route.params.id);
     this.imgList = list.imgList;
     console.log(to);
-    if (userInfo) {
+    if (this._utils.getLocalStorage("userInfo")) {
       await addRecord(
         this.comicInfo.id,
         to.params.id,

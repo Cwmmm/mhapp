@@ -84,9 +84,10 @@ export default {
       width: 100%;
       height: 100%;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       flex-wrap: wrap;
       .card {
+        margin-right: 6px;
         box-sizing: border-box;
         width: 175.2px;
         height: 296px;

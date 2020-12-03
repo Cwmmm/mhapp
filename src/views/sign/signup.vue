@@ -61,7 +61,7 @@ export default {
             const that = this;
             setTimeout(function() {
               that.$router.replace("/sign/login");
-            }, 2000);
+            }, 1000);
           })
           .catch(() => {
             this.name = null;

@@ -61,14 +61,13 @@ export default {
       this.userInfo = res.data;
       this._utils.setLocalStorage("userInfo", JSON.stringify(res.data));
       this.headSelectActive = false;
+      this.$router.go(0);
     },
     changeName: async function() {
       const res = await changeNickName(this.userInfo.name);
       message.success(res.msg);
       this._utils.setLocalStorage("userInfo", JSON.stringify(this.userInfo));
-      setTimeout(() => {
-        this.$router.go(0);
-      }, 500);
+      this.$router.go(0);
     },
     changePsd: async function() {
       await changePsd(this.userInfo.password);
@@ -77,7 +76,6 @@ export default {
       setTimeout(() => {
         this.$router.push("/sign/login");
       }, 500);
-      // ths.to;
     }
   },
   async created() {

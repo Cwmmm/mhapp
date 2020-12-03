@@ -1,6 +1,6 @@
 <template>
   <div class="rank">
-    <v-header></v-header>
+    <v-header :all="false"></v-header>
     <div class="container">
       <div class="rankNavBar">
         <ul class="rankNavList">

@@ -1,6 +1,6 @@
 <template>
   <div class="homepage">
-    <v-header></v-header>
+    <v-header :all="false"></v-header>
     <section class="main">
       <ul class="nav">
         <router-link tag="li" to="info">
@@ -92,9 +92,16 @@
 </template>
 <script>
 import Header from "@/components/Header.vue";
+import { message } from "ant-design-vue";
 export default {
   components: {
     "v-header": Header
+  },
+  created() {
+    if (!this._utils.getLocalStorage("userInfo")) {
+      message.warning("请登陆后再试！");
+      this.$router.push("/sign/login");
+    }
   }
 };
 </script>

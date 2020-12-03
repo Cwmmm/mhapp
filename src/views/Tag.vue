@@ -1,6 +1,6 @@
 <template>
   <div class="tag">
-    <v-header id="top"></v-header>
+    <v-header id="top" :all="false"></v-header>
     <div class="container">
       <div class="nav">
         <!-- 已选 -->

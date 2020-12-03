@@ -1,10 +1,12 @@
 <template>
-  <div class="swiper-item-container">
+  <div class="swiper-item-container" @click="event()">
     <slot></slot>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["event"]
+};
 </script>
 <style lang="less" scoped>
 .swiper-item-container {
@@ -12,6 +14,5 @@ export default {};
   left: 0;
   top: 0;
   display: none;
-  transition: all 500ms ease-in-out;
 }
 </style>
